@@ -1,0 +1,6 @@
+#labels Phase-Support
+#how to install
+
+= Installation =
+
+Simply drop it into ~/Library/Scripts/Applications/iTunes folder.
