@@ -1,5 +1,5 @@
+#summary how to install
 #labels Phase-Support
-#how to install
 
 = Installation =
 
