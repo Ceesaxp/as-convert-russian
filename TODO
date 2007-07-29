@@ -1,0 +1,9 @@
+Medium:
+	* Complete code mapping table to cover all Cyrillic letters.
+Low:
+	* Validate track details on applicability of conversion routine to
+	  prevent accidental conversions.
+Someday/maybe:
+	* Build an intermidiary and/or verbose mode, such that a user can
+	  see the results of proposed conversion, then confirm whther
+	  they're fine.
