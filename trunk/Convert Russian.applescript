@@ -2,9 +2,15 @@
 Script:
 	Convert Russian
 Version:
-	0.2
+	0.3
 CahngeLog:
-	Added a few minor safety belt features (as dilogs, really)
+	Added a few minor safety belt features (as dialogs, really)
+	Committed changes from Sergii Denega:
+	  - character mappings for Ukrainian letters
+	  - make script platform-agnostic (now works on both PPC and Intel)
+	  - "Album artist" and "Comment" are also converted now
+	  - multiple tracks should now be converted correctly
+	  - added a timeout for actions of 300000 seconds
 Author:
 	Andrei Popov (andrei@ceesaxp.org)
 
@@ -20,6 +26,7 @@ Solution:
 
 Credits:
 	Thanks to StefanK at MacScripter BBS  for helping me sort out a few AppleScript issues.
+	Thanks to Sergii Denega for providing a number of further fixes, most importantly to make script work on both PPC and Intel and fixing the issue with multiple tracks to be convereted.
 
 ----
 ** Some say this would not be the case if International pannel lists Russian as first language -- I have not tested that
@@ -37,12 +44,12 @@ property charCodeMap : {Â
 	"0070", "0071", "0072", "0073", "0074", "0075", "0076", "0077", "0078", "0079", "007A", "007B", "007C", "007D", "007E", "007F", Â
 	"0414", "0415", "0417", "0419", "0421", "0426", "042C", "0431", "0430", "0432", "0434", "0433", "0435", "0437", "0439", "0438", Â
 	"043A", "043B", "043D", "043C", "043E", "043F", "0441", "0443", "0442", "0444", "0446", "0445", "044A", "0449", "044B", "044C", Â
-	"00A0", "00A1", "00A2", "00A3", "00A4", "00A5", "00A6", "042F", "00A8", "00A9", "0411", "00AB", "0401", "00AD", "0416", "0428", Â
-	"00B0", "00B1", "00B2", "00B3", "00B4", "00B5", "00B6", "00B7", "00B8", "00B9", "00BA", "00BB", "00BC", "00BD", "0436", "0448", Â
-	"00C0", "00C1", "00C2", "00C3", "00C4", "00C5", "00C6", "00C7", "00C8", "00C9", "00CA", "0410", "0413", "0425", "00CE", "00CF", Â
-	"00D0", "00D1", "00D2", "00D3", "00D4", "00D5", "0447", "0427", "044F", "00D9", "00DA", "00DB", "0420", "0440", "042E", "044E", Â
+	"042D", "00A1", "00A2", "00A3", "00A4", "00A5", "00A6", "042F", "00A8", "00A9", "0411", "0491", "0401", "00AD", "0416", "0428", Â
+	"00B0", "00B1", "00B2", "00B3", "0490", "00B5", "00B6", "00B7", "00B8", "00B9", "00BA", "0404", "0454", "00BD", "0436", "0448", Â
+	"0457", "00C1", "00C2", "00C3", "00C4", "00C5", "00C6", "00C7", "00C8", "00C9", "00CA", "0410", "0413", "0425", "00CE", "00CF", Â
+	"00D0", "00D1", "0456", "0406", "00D4", "00D5", "0447", "0427", "044F", "00D9", "00DA", "00DB", "0420", "0440", "042E", "044E", Â
 	"044D", "00E1", "00E2", "00E3", "00E4", "0412", "041A", "0411", "041B", "0419", "041D", "041E", "041F", "041C", "0423", "0424", Â
-	"00F0", "0422", "042A", "042B", "0429", "00F5", "00F6", "00F7", "00F8", "00F9", "00FA", "00FB", "0451", "00FD", "00FE", "00FF"}
+	"00F0", "0422", "042A", "042B", "0429", "00F5", "00F6", "00F7", "0407", "00F9", "00FA", "00FB", "0451", "00FD", "00FE", "00FF"}
 
 tell application "iTunes"
 	if selection is not {} then
@@ -50,15 +57,30 @@ tell application "iTunes"
 			"WARNING: this action cannot be undone.
 Do you still want to proceede?" buttons {"Yes, please", "Oh, NO!"} default button 2
 		if the button returned of the result is "Yes, please" then
-			set songList to a reference to selection
+			set songList to selection
 			set songsCount to count of items in songList
-			repeat with aTrack in songList
-				set name of aTrack to my fixCyrillics(get name of aTrack)
-				set album of aTrack to my fixCyrillics(get album of aTrack)
-				set artist of aTrack to my fixCyrillics(get artist of aTrack)
-				set genre of aTrack to my fixCyrillics(get genre of aTrack)
-				set comment of aTrack to my fixCyrillics(get comment of aTrack)
-			end repeat
+			
+			set oldfi to fixed indexing
+			set fixed indexing to true
+			
+			with timeout of 30000 seconds
+				repeat with aTrack in songList
+					tell aTrack
+						try
+							set name to my fixCyrillics(get name)
+							set artist to my fixCyrillics(get artist)
+							set album to my fixCyrillics(get album)
+							set album artist to my fixCyrillics(get album artist)
+							set genre to my fixCyrillics(get genre)
+							set composer to my fixCyrillics(get composer)
+							set comment to my fixCyrillics(get comment)
+						end try
+					end tell
+				end repeat
+			end timeout
+			
+			set fixed indexing to oldfi
+			
 			display dialog "Converted details for " & songsCount & " tracks." buttons {"OK"} default button 1
 		else
 			-- action for 2nd button goes here
@@ -70,11 +92,23 @@ Do you still want to proceede?" buttons {"Yes, please", "Oh, NO!"} default butto
 end tell
 
 on fixCyrillics(str)
-	set outStr to "" as Unicode text
-	repeat with i in characters of str
-		set charCode to ASCII number of i
-		set Uni to item (charCode + 1) of charCodeMap
-		set outStr to outStr & (run script "Çdata utxt" & Uni & "È" as Unicode text)
-	end repeat
-	return outStr
+	set macPlatform to do shell script "uname -p"
+	if macPlatform is not "i386" then
+		set outStr to "" as Unicode text
+		repeat with i in characters of str
+			set charCode to ASCII number of i
+			set Uni to item (charCode + 1) of charCodeMap
+			set outStr to outStr & (run script "Çdata utxt" & Uni & "È" as Unicode text)
+		end repeat
+		return outStr
+	else
+		set outStr to "" as Unicode text
+		repeat with i in characters of str
+			set charCode to ASCII number of i
+			set Uni to item (charCode + 1) of charCodeMap
+			set Uni to text 3 thru 4 of Uni & text 1 thru 2 of Uni
+			set outStr to outStr & (run script "Çdata utxt" & Uni & "È" as Unicode text)
+		end repeat
+		return outStr
+	end if
 end fixCyrillics
