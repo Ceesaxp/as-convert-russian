@@ -1,18 +1,12 @@
 (*
 Script:
-	Convert Russian
+	Convert Cyrillics
 Version:
-	0.3
+	0.4
 CahngeLog:
-	Added a few minor safety belt features (as dialogs, really)
-	Committed changes from Sergii Denega:
-	  - character mappings for Ukrainian letters
-	  - make script platform-agnostic (now works on both PPC and Intel)
-	  - "Album artist" and "Comment" are also converted now
-	  - multiple tracks should now be converted correctly
-	  - added a timeout for actions of 300000 seconds
+	Merged initial dialogue changes from Teodor Zlatanov -- you can now choose what details require conversion.
 Author:
-	Andrei Popov (andrei@ceesaxp.org)
+	Andrei Popov (ceesaxp@gmail.com)
 
 The issue:
 	ID3 tags that are embedded in MP3 files generated on Windows or (shudder) DOS machines use extended ASCII to store Cyrillics.  When you import such files into iTunes, it assumes that they're all in MacRoman coding page** and happily garbles them up.
@@ -27,6 +21,7 @@ Solution:
 Credits:
 	Thanks to StefanK at MacScripter BBS  for helping me sort out a few AppleScript issues.
 	Thanks to Sergii Denega for providing a number of further fixes, most importantly to make script work on both PPC and Intel and fixing the issue with multiple tracks to be convereted.
+	Thanks to Teodor Zlatanov for providing changes that allow choosing what fields/tags should be converted.
 
 ----
 ** Some say this would not be the case if International pannel lists Russian as first language -- I have not tested that
@@ -52,11 +47,12 @@ property charCodeMap : {Â
 	"00F0", "0422", "042A", "042B", "0429", "00F5", "00F6", "00F7", "0407", "00F9", "00FA", "00FB", "0451", "00FD", "00FE", "00FF"}
 
 tell application "iTunes"
+	set fields to (choose from list {"Name", "Artist", "Album", "Album Artist", "Genre", "Composer", "Comment"} default items {"Name", "Artist", "Album", "Album Artist", "Composer", "Comment"} with title "Tag Picker" with prompt "WARNING: this action cannot be undone.
+Do you still want to proceed? Choose one or more fields in the tag" OK button name "Yes, please" cancel button name "Oh NO, Cancel" with multiple selections allowed)
+	
 	if selection is not {} then
-		display dialog Â
-			"WARNING: this action cannot be undone.
-Do you still want to proceede?" buttons {"Yes, please", "Oh, NO!"} default button 2
-		if the button returned of the result is "Yes, please" then
+		if fields is not {} then
+			
 			set songList to selection
 			set songsCount to count of items in songList
 			
@@ -67,13 +63,13 @@ Do you still want to proceede?" buttons {"Yes, please", "Oh, NO!"} default butto
 				repeat with aTrack in songList
 					tell aTrack
 						try
-							set name to my fixCyrillics(get name)
-							set artist to my fixCyrillics(get artist)
-							set album to my fixCyrillics(get album)
-							set album artist to my fixCyrillics(get album artist)
-							set genre to my fixCyrillics(get genre)
-							set composer to my fixCyrillics(get composer)
-							set comment to my fixCyrillics(get comment)
+							if fields contains "Name" then set name to my fixCyrillics(get name)
+							if fields contains "Artist" then set artist to my fixCyrillics(get artist)
+							if fields contains "Album" then set album to my fixCyrillics(get album)
+							if fields contains "Album Artist" then set album artist to my fixCyrillics(get album artist)
+							if fields contains "Genre" then set genre to my fixCyrillics(get genre)
+							if fields contains "Composer" then set composer to my fixCyrillics(get composer)
+							if fields contains "Comment" then set comment to my fixCyrillics(get comment)
 						end try
 					end tell
 				end repeat
