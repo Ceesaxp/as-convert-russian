@@ -1,88 +1,92 @@
-{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf410
-{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fswiss\fcharset77 Helvetica-Oblique;
-\f3\fmodern\fcharset77 Courier;}
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
 {\colortbl;\red255\green255\blue255;\red0\green64\blue128;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww12200\viewh12480\viewkind0
+{\*\expandedcolortbl;;\csgenericrgb\c0\c25098\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16360\viewh14280\viewkind0
 {\*\background {\shp{\*\shpinst\shpleft0\shptop0\shpright0\shpbottom0\shpfhdr0\shpbxmargin\shpbymargin\shpwr0\shpwrk0\shpfblwtxt1\shpz0\shplid1025{\sp{\sn shapeType}{\sv 1}}{\sp{\sn fFlipH}{\sv 0}}{\sp{\sn fFlipV}{\sv 0}}{\sp{\sn fillColor}{\sv 15132390}}{\sp{\sn fFilled}{\sv 1}}{\sp{\sn lineWidth}{\sv 0}}{\sp{\sn fLine}{\sv 0}}{\sp{\sn bWMode}{\sv 9}}{\sp{\sn fBackground}{\sv 1}}}}}
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\qc\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs48 \cf2 \shad\shadx21\shady-22\shadr0\shado85 \shadc0 Convert Russian
-\f1\b0\fs24 \cf0 \shad0 \
+\b0\fs24 \cf0 \shad0 \
 
-\f2\i Track detail conversion to "proper" Russian for iTunes
-\f1\i0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\i Track detail conversion to "proper" Russian for iTunes
+\i0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
 
-\f0\b\fs36 \cf2 \shad\shadx15\shady-16\shadr0\shado85 \shadc0 The issue\
+\b\fs36 \cf2 \shad\shadx15\shady-16\shadr0\shado85 \shadc0 The issue\
 
-\f1\b0\fs24 \cf0 \shad0 \
+\b0\fs24 \cf0 \shad0 \
 ID3 tags that are embedded in MP3 files generated on Windows or (shudder) DOS machines use extended ASCII to store Cyrillics.  When you import such files into iTunes, it assumes that they're all in MacRoman coding page and happily garbles them up
-\fs20 \super \'a0
+\fs20 \super \'86
 \fs24 \nosupersub .\
 \
 
-\f0\b\fs36 \cf2 \shad\shadx21\shady-22\shadr0\shado85 \shadc0 The search to solve it\
+\b\fs36 \cf2 \shad\shadx21\shady-22\shadr0\shado85 \shadc0 The search to solve it\
 
-\f1\b0\fs24 \cf0 \shad0 \
+\b0\fs24 \cf0 \shad0 \
 One way to do that is to convert tags 
-\f2\i before
-\f1\i0  importing them into iTunes.  This might work, but I have not tried it, don't know.\
+\i before
+\i0  importing them into iTunes.  This might work, but I have not tried it, don't know.\
 \
 Another way was to try and fix them once they're in using a `
-\f3\fs22 do shell command
-\f1\fs24 ' call from AppleScript.  No luck there, although 
-\f3\fs22 iconv -f cp866 -t utf8
-\f1\fs24  *almost* does the right thing.  Almost, but not quite.\
+\f1\fs22 do shell command
+\f0\fs24 ' call from AppleScript.  No luck there, although 
+\f1\fs22 iconv -f cp866 -t utf8
+\f0\fs24  *almost* does the right thing.  Almost, but not quite.\
 \
 
-\f0\b\fs36 \cf2 \shad\shadx14\shady-15\shadr0\shado85 \shadc0 Solution\
+\b\fs36 \cf2 \shad\shadx14\shady-15\shadr0\shado85 \shadc0 Solution\
 
-\f1\b0\fs24 \cf0 \shad0 \
+\b0\fs24 \cf0 \shad0 \
 I had to manually recode conversion table, based on MacRoman ASCII page ({\field{\*\fldinst{HYPERLINK "http://www.iro.umontreal.ca/~felipe/IFT1010-Hiver2005/Complements/ascii.html"}}{\fldrslt http://www.iro.umontreal.ca/~felipe/IFT1010-Hiver2005/Complements/ascii.html}}) viewed as if it were Cyrillic (Mac) page in Camino, then assigning proper UNICODE values to each code point.\
 \
 
-\f0\b\fs28 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 Before
-\f1\b0\fs24 \shad0 \
+\b\fs28 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 Before
+\b0\fs24 \shad0 \
 \cf0 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf0 {{\NeXTGraphic Pasted Graphic 1.tiff \width9200 \height4420
-}¬}\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 1.tiff \width9200 \height4420 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0 \
-
-\f0\b\fs28 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 After
-\f1\b0\fs24 \shad0 \
-\cf0 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf0 {{\NeXTGraphic Pasted Graphic.tiff \width9160 \height4420
-}¬}\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
 
-\f0\b\fs36 \cf2 \shad\shadx14\shady-15\shadr0\shado85 \shadc0 Installation\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\b\fs28 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 After
+\b0\fs24 \shad0 \
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic.tiff \width9160 \height4420 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
 
-\f1\b0\fs24 \cf0 \shad0 \
+\b\fs36 \cf2 \shad\shadx14\shady-15\shadr0\shado85 \shadc0 Installation\
+
+\b0\fs24 \cf0 \shad0 \
 Copy Convert Russian script file to 
-\f3\fs22 ~/Library/Scripts/Applications/iTunes
-\f1\fs24 .  You can change the name of a script to ensure proper sorting in the Script Menu.\
+\f1\fs22 ~/Library/Scripts/Applications/iTunes 
+\f0\fs24 or to 
+\f1\fs22 ~/Library/iTunes/Scripts
+\f0\fs24 .  You can change the name of a script to ensure proper sorting in the Script Menu.\
 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf0 {{\NeXTGraphic Pasted Graphic 2.tiff \width6180 \height2300
-}¬}\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 {{\NeXTGraphic Pasted Graphic 2.tiff \width6180 \height2300 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 \cf0 \
-To enable Script Menu \'d1 see {\field{\*\fldinst{HYPERLINK "http://www.apple.com/applescript/scriptmenu/"}}{\fldrslt http://www.apple.com/applescript/scriptmenu/}}.\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+To enable Script Menu \'97 see {\field{\*\fldinst{HYPERLINK "http://www.apple.com/applescript/scriptmenu/"}}{\fldrslt http://www.apple.com/applescript/scriptmenu/}}.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\b\fs36 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 License
-\f1\b0 \shad0 \
+\b\fs36 \cf2 \shad\shadx11\shady-11\shadr0\shado85 \shadc0 License
+\b0 \shad0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \fs24 \cf0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 Convert Russian -- fix Russian details of imported MP3s in iTunes.\
 Copyright \'a9 2007 Andrei Popov\
 \
@@ -91,12 +95,12 @@ This program is free software; you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\
 \
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \
 _____________\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\fs18 \cf0 \super \'a0
-\fs20  \nosupersub Some say this would not be the case if International pannel lists Russian as first language \'d1 I have not tested that
+\fs18 \cf0 \super \'86
+\fs20  \nosupersub Some say this would not be the case if International pannel lists Russian as first language \'97 I have not tested that
 \fs24 \
 }
