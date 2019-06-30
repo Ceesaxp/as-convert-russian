@@ -6,14 +6,11 @@ Here's a situation: you have a bunch of MP3s of Russian (or Cyrillic in general)
 
 I have once in the past stumbled onto a small AppleScript solution that fixed that, but I was unable to trace it down again.  I have, therefore, decided to "scratch this particular itch" and build one myself.
 
-See
+#Installation
 
-  * ImplementationDetails
-  * InstallingConvertRussian
-  * RunningConvertRussian
+Simply drop *.scpt file into `~/Library/Scripts/Applications/iTunes` folder
 
-for details.
-
+on newer iTunes versions drop it into `~/Library/iTunes/Scripts` folder. If `Scripts` does not exist - create it.
 
 ----
 
