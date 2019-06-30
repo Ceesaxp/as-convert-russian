@@ -6,11 +6,11 @@ Here's a situation: you have a bunch of MP3s of Russian (or Cyrillic in general)
 
 I have once in the past stumbled onto a small AppleScript solution that fixed that, but I was unable to trace it down again.  I have, therefore, decided to "scratch this particular itch" and build one myself.
 
-#Installation
+## Installation
 
-Simply drop *.scpt file into `~/Library/Scripts/Applications/iTunes` folder
+Simply drop `*.scpt` file into `~/Library/Scripts/Applications/iTunes` folder
 
-on newer iTunes versions drop it into `~/Library/iTunes/Scripts` folder. If `Scripts` does not exist - create it.
+on newer macOS versions drop it into `~/Library/iTunes/Scripts` folder instead. If `Scripts` does not exist — create it.
 
 ----
 
@@ -20,7 +20,11 @@ on newer iTunes versions drop it into `~/Library/iTunes/Scripts` folder. If `Scr
 
 Вот тут–то `as-convert-russian` и может вам помочь.  Он транслирует _extended ASCII_ символы из кодировки Mac Latin (поскольку именно в эту кодировку они попали) в Unicode, в котором они замечательно будут сохранены в iTunes.
 
-Детали установки и использование — смотрите `ReadMe.rtfd` в дитрибутиве или InstallingConvertRussian и  RunningConvertRussian тут.
+## Как поставить
+
+Скопируйте файл `*.scpt` в папку `~/Library/Scripts/Applications/iTunes`.
+
+Последние версии macOS изменили место хранения сценариев на `~/Library/iTunes/Scripts`. Если директория `Scripts` не существует — создайте её.
 
 ----
 
