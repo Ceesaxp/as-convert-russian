@@ -47,8 +47,7 @@ property charCodeMap : {Â
 	"00F0", "0422", "042A", "042B", "0429", "00F5", "00F6", "00F7", "0407", "00F9", "00FA", "00FB", "0451", "00FD", "00FE", "00FF"}
 
 tell application "iTunes"
-	set fields to (choose from list {"Name", "Artist", "Album", "Album Artist", "Genre", "Composer", "Comment"} default items {"Name", "Artist", "Album", "Album Artist", "Composer", "Comment"} with title "Tag Picker" with prompt "WARNING: this action cannot be undone.
-Do you still want to proceed? Choose one or more fields in the tag" OK button name "Yes, please" cancel button name "Oh NO, Cancel" with multiple selections allowed)
+	set fields to (choose from list {"name", "artist", "album", "album artist", "genre", "composer", "comment"} default items {"name", "artist", "album", "album artist", "composer", "comment"} with title "Tag Picker" with prompt "WARNING: this action cannot be undone.\nDo you still want to proceed? Choose one or more fields in the tag" OK button name "Yes, please" cancel button name "Oh NO, Cancel" with multiple selections allowed)
 	
 	if selection is not {} then
 		if fields is not {} then
@@ -63,13 +62,62 @@ Do you still want to proceed? Choose one or more fields in the tag" OK button na
 				repeat with aTrack in songList
 					tell aTrack
 						try
-							if fields contains "Name" then set name to my fixCyrillics(get name)
-							if fields contains "Artist" then set artist to my fixCyrillics(get artist)
-							if fields contains "Album" then set album to my fixCyrillics(get album)
-							if fields contains "Album Artist" then set album artist to my fixCyrillics(get album artist)
-							if fields contains "Genre" then set genre to my fixCyrillics(get genre)
-							if fields contains "Composer" then set composer to my fixCyrillics(get composer)
-							if fields contains "Comment" then set comment to my fixCyrillics(get comment)
+							set message to "Convert the tags?:\n\n"
+							
+							if fields contains "name" then
+								set name_origin to get name
+								set name_new to my fixCyrillics(name_origin)
+								set message to message & "name:\n\t" & name_origin & "\n\t" & name_new & "\n\n"
+							end if
+							
+							if fields contains "artist" then
+								set artist_origin to get artist
+								set artist_new to my fixCyrillics(artist_origin)
+								set message to message & "artist:\n\t" & artist_origin & "\n\t" & artist_new & "\n\n"
+							end if
+							
+							if fields contains "album" then
+								set album_origin to get album
+								set album_new to my fixCyrillics(album_origin)
+								set message to message & "album:\n\t" & album_origin & "\n\t" & album_new & "\n\n"
+							end if
+							
+							if fields contains "album artist" then
+								set album_artist_origin to get album artist
+								set album_artist_new to my fixCyrillics(album_artist_origin)
+								set message to message & "album artist:\n\t" & album_artist_origin & "\n\t" & album_artist_new & "\n\n"
+							end if
+							
+							if fields contains "genre" then
+								set genre_origin to get genre
+								set genre_new to my fixCyrillics(genre_origin)
+								set message to message & "genre:\n\t" & genre_origin & "\n\t" & genre_new & "\n\n"
+							end if
+							
+							if fields contains "composer" then
+								set composer_origin to get composer
+								set composer_new to my fixCyrillics(composer_origin)
+								set message to message & "composer:\n\t" & composer_origin & "\n\t" & composer_new & "\n\n"
+							end if
+							if fields contains "comment" then
+								set comment_origin to get comment
+								set comment_new to my fixCyrillics(comment_origin)
+								set message to message & "comment:\n\t" & comment_origin & "\n\t" & comment_new & "\n\n"
+							end if
+							
+							set question to display dialog message buttons {"Yes", "No, skip"} default button 1
+							set answer to button returned of question
+							if answer is equal to "Yes" then
+								if fields contains "name" then set name to name_new
+								if fields contains "artist" then set artist to artist_new
+								if fields contains "album" then set album to album_new
+								if fields contains "album artist" then set album artist to album_artist_new
+								if fields contains "genre" then set genre to genre_new
+								if fields contains "composer" then set composer to composer_new
+								if fields contains "comment" then set comment to comment_new
+							end if				
+						on error e number n
+							display dialog "Error: " & e & " " & n buttons {"OK"} default button 1
 						end try
 					end tell
 				end repeat
@@ -97,6 +145,7 @@ on fixCyrillics(str)
 			set outStr to outStr & (run script "Çdata utxt" & Uni & "È" as Unicode text)
 		end repeat
 		return outStr
+		
 	else
 		set outStr to "" as Unicode text
 		repeat with i in characters of str
