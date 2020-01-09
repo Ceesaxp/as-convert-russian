@@ -1,5 +1,9 @@
 # AS-Convert-Russian
 
+**Version 0.5 is macOS Catalina compatible (uses `Music` instead of `iTunes`). It will not work on older Macs, hence v0.4 is provided as a separate script**
+
+I have tried to merge all tag operations within one script, but `album artist` tag kept on failing when iTunes dictionary is used and I could not come up with a way to overcome this issue. Hence there is a 0.4 that should work on pre-Catalina and 0.5 that works on Catalina onwards.
+
 **Version 0.4 adds ability to choose fields/tags to convert**. Thanks to Teodor Zlatanov.
 
 Here's a situation: you have a bunch of MP3s of Russian (or Cyrillic in general) songs that you decided to drag-and-drop add to your iTunes library.  No problem with that, except every once in awhile you end up with songs/artists/albums named using "birds language" instead of proper Cyrillic letters.
@@ -26,6 +30,3 @@ on newer macOS versions drop it into `~/Library/iTunes/Scripts` folder instead. 
 
 Последние версии macOS изменили место хранения сценариев на `~/Library/iTunes/Scripts`. Если директория `Scripts` не существует — создайте её.
 
-----
-
-Automatically exported from code.google.com/p/as-convert-russian
