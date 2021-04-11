@@ -12,8 +12,14 @@ I have once in the past stumbled onto a small AppleScript solution that fixed th
 
 ## Installation
 
-Simply drop `*.scpt` file into `~/Library/Scripts/Applications/iTunes` folder
+### Installation on macOS 11 Big Sur
 
+Simply drop `*.scpt` file into `~/Library/Scripts/Applications/Music` folder.
+Run Script Editor (bundled with macOS), select Script Editor > Preferences and enable "Show script menu..." option
+
+### Installation on early macOS versions
+
+Simply drop `*.scpt` file into `~/Library/Scripts/Applications/iTunes` folder
 on newer macOS versions drop it into `~/Library/iTunes/Scripts` folder instead. If `Scripts` does not exist — create it.
 
 ----
@@ -28,9 +34,13 @@ on newer macOS versions drop it into `~/Library/iTunes/Scripts` folder instead. 
 
 Вот тут–то `as-convert-russian` и может вам помочь.  Он транслирует _extended ASCII_ символы из кодировки Mac Latin (поскольку именно в эту кодировку они попали) в Unicode, в котором они замечательно будут сохранены в iTunes.
 
+
 ## Как поставить
 
+### Как поставить macOS 11 Big Sur
+Скопируйте файл `*.scpt` в папку `~/Library/Scripts/Applications/Music`
+Запустите Script Editor (поставляется в составе macOS), выберите Script Editor > Preferences и поставьте чекбокс "Show script menu...".
+
+### Ка поставить на более ранние версии macOS
 Скопируйте файл `*.scpt` в папку `~/Library/Scripts/Applications/iTunes`.
-
 Последние версии macOS изменили место хранения сценариев на `~/Library/iTunes/Scripts`. Если директория `Scripts` не существует — создайте её.
-
